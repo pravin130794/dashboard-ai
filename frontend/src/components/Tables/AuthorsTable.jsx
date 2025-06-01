@@ -13,6 +13,7 @@ import {
   Th,
   Thead,
   Tr,
+  Tooltip,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useOrder } from "../../context/OrderContext";
@@ -177,7 +178,7 @@ const ordersData = [
     stage: "Parser Generation",
     ErrorDescription: "Request timed out from BNC",
     Resolutions:
-      "Verify NTLS-BNC payload in network activaty or contact BNC support | 1) Awaiting response from BNC\n2) Please Retry the fallout from PORCH\n3) If issue still persists, please reach out to BNC support.",
+      "Verify NTLS-BNC payload in network activaty or contact BNC support | 1) Awaiting response from BNC \n 2) Please Retry the fallout from PORCH \n 3) If issue still persists, please reach out to BNC support.",
     ResponsibleSystems: "NTLS, BNC",
     POC: "",
   },
@@ -473,23 +474,25 @@ export default function AuthorsTable() {
           }}
           maxW="180px"
         />
-        <Button
-          onClick={() => {
-            setSearchTerm("");
-            setFilterStatus("All");
-            setFromDate("");
-            setToDate("");
-            setCurrentPage(1);
-          }}
-          colorScheme="blue"
-          variant="outline"
-        >
-          Clear Filters
-        </Button>
+        <Tooltip content="Clear all filters">
+          <Button
+            onClick={() => {
+              setSearchTerm("");
+              setFilterStatus("All");
+              setFromDate("");
+              setToDate("");
+              setCurrentPage(1);
+            }}
+            colorScheme="blue"
+            variant="outline"
+          >
+            Clear Filters
+          </Button>
+        </Tooltip>
       </Flex>
 
       {/* Table */}
-      <Table variant="simple">
+      <Table variant="simple" minW={"1000px"}>
         <Thead>
           <Tr>
             <Th>Order ID</Th>
@@ -523,10 +526,55 @@ export default function AuthorsTable() {
                     {order.status}
                   </Badge>
                 </Td>
-                <Td>{order.ErrorCode ?? ""}</Td>
-                <Td>{order.ErrorDescription ?? ""}</Td>
-                <Td>{order.Resolutions ?? ""}</Td>
-                <Td>{order.ResponsibleSystems ?? ""}</Td>
+                <Td
+                  maxW="200px"
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  <Tooltip label={order.ErrorCode} hasArrow>
+                    <Text noOfLines={1}>{order.ErrorCode}</Text>
+                  </Tooltip>
+                </Td>
+                <Td
+                  maxW="200px"
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  <Tooltip label={order.ErrorDescription} hasArrow>
+                    <Text noOfLines={1}>{order.ErrorDescription}</Text>
+                  </Tooltip>
+                </Td>
+                <Td
+                  maxW="200px"
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  <Tooltip
+                    hasArrow
+                    label={
+                      <Box>
+                        {order.Resolutions?.split(/\n|\|/).map((line, idx) => (
+                          <Text key={idx}>{line.trim()}</Text>
+                        ))}
+                      </Box>
+                    }
+                  >
+                    <Text noOfLines={1}>{order.Resolutions}</Text>
+                  </Tooltip>
+                </Td>
+                <Td
+                  maxW="200px"
+                  overflow="hidden"
+                  whiteSpace="nowrap"
+                  textOverflow="ellipsis"
+                >
+                  <Tooltip label={order.ResponsibleSystems} hasArrow>
+                    <Text noOfLines={1}>{order.ResponsibleSystems}</Text>
+                  </Tooltip>
+                </Td>
                 <Td>
                   <Button
                     size="sm"
