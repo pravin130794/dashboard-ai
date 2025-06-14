@@ -363,7 +363,9 @@ export default function AuthorsTable() {
   const [fromDate, setFromDate] = useState("");
   const [toDate, setToDate] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sentSelectedOrder, setSentSelectedOrder] = useState(null);
 
+  
   // Utility to convert dd/mm/yy → Date object
   const parseDate = (ddmmyy) => {
     if (ddmmyy !== undefined) {
@@ -576,17 +578,30 @@ export default function AuthorsTable() {
                   </Tooltip>
                 </Td>
                 <Td>
-                  <Button
-                    size="sm"
-                    colorScheme="blue"
-                    variant="outline"
-                    onClick={() => {
-                      setSelectedOrder(order);
-                      navigate("/analysis");
-                    }}
-                  >
-                    Analyse
-                  </Button>
+                  <Flex gap="2">
+                    <Button
+                      size="sm"
+                      colorScheme="blue"
+                      variant="outline"
+                      onClick={() => {
+                        setSentSelectedOrder(order);
+                        // Trigger your Slack API call here
+                      }}
+                    >
+                      Send to Slack
+                    </Button>
+                    <Button
+                      size="sm"
+                      colorScheme="blue"
+                      variant="outline"
+                      onClick={() => {
+                        setSelectedOrder(order);
+                        navigate("/analysis");
+                      }}
+                    >
+                      Analyse
+                    </Button>
+                  </Flex>
                 </Td>
               </Tr>
             ))

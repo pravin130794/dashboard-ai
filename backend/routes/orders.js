@@ -3,6 +3,9 @@ const router = express.Router();
 const orderService = require("../services/orderService");
 const { sendEmail } = require("../utils/mail");
 
+const SLACK_BOT_TOKEN = process.env.SLACK_BOT_TOKEN;
+const SLACK_CHANNEL_ID = process.env.SLACK_CHANNEL_ID;
+
 /**
  * @swagger
  * /get-order-details:
@@ -65,6 +68,42 @@ router.post("/send-email", async (req, res) => {
     res
       .status(500)
       .json({ error: "Failed to send email", exception: e.message });
+  }
+});
+
+router.post("/api/notify", async (req, res) => {
+  const { message } = req.body;
+
+  if (!message) {
+    return res.status(400).json({ error: "Message is required" });
+  }
+
+  const headers = {
+    Authorization: `Bearer ${SLACK_BOT_TOKEN}`,
+    "Content-Type": "application/json",
+  };
+
+  const payload = {
+    channel: SLACK_CHANNEL_ID,
+    text: message,
+  };
+
+  try {
+    const response = await fetch("https://slack.com/api/chat.postMessage", {
+      method: "POST",
+      headers,
+      body: JSON.stringify(payload),
+    });
+
+    const result = await response.json();
+
+    if (!result.ok) {
+      return res.status(400).json({ error: result.error });
+    }
+
+    return res.status(200).json({ success: true });
+  } catch (err) {
+    return res.status(500).json({ error: err.message });
   }
 });
 

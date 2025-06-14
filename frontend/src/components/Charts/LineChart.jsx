@@ -7,7 +7,7 @@ export default function LineChart() {
     series: [
       {
         name: "Sales",
-        data: [31, 40, 28, 51, 42, 109, 100],
+        data: [10, 20, 15, 30, 25, 40, 35, 50, 45, 60],
       },
     ],
     options: {
@@ -19,7 +19,20 @@ export default function LineChart() {
       dataLabels: { enabled: false },
       stroke: { curve: "smooth" },
       xaxis: {
-        categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul"],
+        categories: [
+          "Jan",
+          "Feb",
+          "Mar",
+          "Apr",
+          "May",
+          "Jun",
+          "Jul",
+          "Aug",
+          "Sep",
+          "Oct",
+          "Nov",
+          "Dec",
+        ],
       },
     },
   };

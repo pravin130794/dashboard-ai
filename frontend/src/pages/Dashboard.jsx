@@ -1,3 +1,4 @@
+// src/pages/DashboardPage.jsx
 import {
   Box,
   Flex,
@@ -18,7 +19,9 @@ import {
   FaChartBar,
   FaExclamationCircle,
 } from "react-icons/fa";
-import StatsCard from "../components/Cards/StatsCard"; // Adjust path if needed
+import StatsCard from "../components/Cards/StatsCard";
+import LineChart from "../components/Charts/LineChart";
+import BarChart from "../components/Charts/BarChart";
 
 const data = {
   totalCalls: 20245,
@@ -87,6 +90,15 @@ export default function DashboardPage() {
         </SimpleGrid>
       </Box>
 
+      {/* Line Chart Section */}
+      <Box mb={8}>
+        <LineChart />
+      </Box>
+
+      {/* Line Chart Section */}
+      <Box mb={8}>
+        <BarChart />
+      </Box>
       {/* Top Intents Table */}
       <Box>
         <Text fontSize="lg" fontWeight="bold" mb={4}>
