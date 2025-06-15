@@ -22,6 +22,7 @@ import {
 import StatsCard from "../components/Cards/StatsCard";
 import LineChart from "../components/Charts/LineChart";
 import BarChart from "../components/Charts/BarChart";
+import FloatingChatbot from "../components/Chatbot/FloatingChatbot";
 
 const data = {
   totalCalls: 20245,
@@ -71,7 +72,6 @@ export default function DashboardPage() {
           icon={FaChartBar}
         />
       </SimpleGrid>
-
       {/* Call Topics */}
       <Box mb={8}>
         <Text fontSize="lg" fontWeight="bold" mb={4}>
@@ -89,12 +89,10 @@ export default function DashboardPage() {
           ))}
         </SimpleGrid>
       </Box>
-
       {/* Line Chart Section */}
       <Box mb={8}>
         <LineChart />
       </Box>
-
       {/* Line Chart Section */}
       <Box mb={8}>
         <BarChart />
@@ -137,6 +135,7 @@ export default function DashboardPage() {
           </Tbody>
         </Table>
       </Box>
+      <FloatingChatbot />;
     </Box>
   );
 }

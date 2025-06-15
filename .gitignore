@@ -144,3 +144,11 @@ dist
 # End of https://www.toptal.com/developers/gitignore/api/node
 
 *.xlsx
+venv/
+.venv/
+*/venv/
+*venv/
+
+__pycache__/
+
+**/.DS_Store
